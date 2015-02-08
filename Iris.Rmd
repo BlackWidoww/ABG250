@@ -41,6 +41,7 @@ petal length/width and sepal length/width using the `caret` package.
 ```{r modFit, message=FALSE}
 
 #Load required package:
+# install.packages("caret")     #Unhash to install
 library(caret)
 modFit <- train(Species ~., method = "rpart", data=iris) #Fit model
 print(modFit$finalModel)   #Summarize model
@@ -51,6 +52,7 @@ print(modFit$finalModel)   #Summarize model
 The final analysis is presented as a decison tree, using the `rattle` package.
 
 ```{r plotTree, fig.width=6, fig.height=4, message=FALSE}
+#install.packages("rattle")    #Unhash to install
 library(rattle)
 fancyRpartPlot(modFit$finalModel) # Plot decision tree
 ```
