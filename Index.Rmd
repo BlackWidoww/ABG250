@@ -1,0 +1,228 @@
+########### Unhash to install Slidify ##############
+## require(devtools)                              ##
+## install_github("slidify", "ramnathv")          ##
+## install_github("slidifyLibraries", "ramnathv") ##
+## library(slidify)                               ##
+##                                                ##
+## Packages within Iris example:                  ##
+## install.packages("caret")                      ##
+## install.packages("rattle")                     ##
+## library(caret); library(rattle)                ##
+####################################################
+
+
+---
+title       : RMarkdown and Knitr 
+subtitle    : UC Davis ABG 250 - Mathematical Modeling in Biological Systems
+author      : Courtney D. Shelley
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : mathjax       # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+
+## What is RMarkdown?
+
+- RMarkdown is a tool to integrate writing blocks with "live" R code.
+
+- R code is evaluated as part of the processing of the markdown document.
+
+- Data, code, and processing can flow in a single document. 
+
+- Reproducible research through literate statistical programming is the goal:         
+    - An article which is a stream of **text** and **code** chunks, **weaved** to produce a human-readable document and **tangled** to produce a machine-readable document. 
+    - R code is evaluated when the document is processed and the results are inserted into the document, demonstrating functional code and reproducible results.
+
+- See http://rmarkdown.rstudio.com/ 
+
+--- .class #id 
+
+
+
+## Creating an RMarkdown Document
+
+- If you haven't done so already, install **RStudio**
+
+  - Go to http://www.rstudio.com/products/rstudio/download/ and select the appropriate download for your system.
+
+- Select File $\rightarrow$ New File $\rightarrow$ R Markdown from the dropdown menu.
+
+- Give your document a title and author.
+
+- You have three output format options:
+
+  - HTML produces a web-readable document, which will open in any browser (hint: great for emailing but don't use this if you plan on printing your document)
+  - PDF, uneditable to receivers and maintains its formatting on any platform. 
+  - Word documents allow the receiver to edit and comment on your document.
+
+--- .class #id
+
+
+
+## RMarkdown Document Basics 
+
+- The front-of-document chunk within the `---` is a bit of css code that formats your document.  With a bit of research, you can customize this.  See http://rmarkdown.rstudio.com/html_document_format.html.
+
+- Text chunks are separated from code chunks.  Text chunks can include mathematical formulas, web links, anything you'd normally include in a text editor like Word.
+
+- Code chunks are separated within `'''{r} [code chunk] '''`.  By default, code will echo back as output before the results of the code, but this can be modified with `echo = FALSE`.  
+  - See http://rmarkdown.rstudio.com/authoring_rcodechunks.html.  
+  - Hint: It's a good idea to name your chunks - `'''{r nameHere}`
+
+--- .class #id
+
+
+
+## Text Chunk Options
+
+```
+Emphasis:     *italic* or _italic_ 
+              **bold** or __bold__
+   
+Headers:      # Header 1    
+              ## Header 2   
+              ### Header 3  
+
+Unordered lists:    - Item 1
+                    - Item 2
+                    - Item 3
+
+Ordered lists:      1. Item 1
+                    2. Item 2
+                    3. Item 3
+```
+
+--- .class #id
+
+
+
+
+## A Simple Example
+
+```
+## Classification With Iris Data Set
+
+We will use R.A. Fisher's classic iris data set to generate a classification tree. 
+```
+
+```{r eval=FALSE}
+# ```{r loadData, message = FALSE}
+#Load data and required packages
+data(iris)
+library(caret); library(rattle)
+nrow <- nrow(iris); ncol <- ncol(iris)  #inline code
+iris[1:4,]
+# ```
+```  
+
+```
+The data consists of `'r nrow'` rows and `'r ncol'` columns, with no missing values.  
+```
+
+--- .class #id
+
+
+
+## Classification Analysis with Iris Data Set
+
+We will use R.A. Fisher's classic iris data set to generate a classification tree. 
+
+```{r loadData, message = FALSE}
+#Load data and required packages
+data(iris)
+library(caret); library(rattle)
+nrow <- nrow(iris); ncol <- ncol(iris)  # inline code
+iris[1:4,]
+```  
+
+The data consists of `r nrow` rows and `r ncol` columns, with no missing values.  
+
+--- .class #id
+
+```
+### Analysis
+
+Analysis consisted of fitting a predictive model of iris species based on 
+petal length/width and sepal length/width. 
+```
+
+```{r eval=FALSE}
+#```{r analysis, message = FALSE}
+modFit <- train(Species ~., method = "rpart", data=iris) #Fit model
+print(modFit$finalModel)   #Summarize model
+#```
+```
+
+```
+The final analysis is presented as a decison tree.
+```
+```{r, eval=FALSE}
+#```{r tree, fig.width = 5, fig.height = 4}
+
+fancyRpartPlot(modFit$finalModel) #Plot decision tree
+#```
+```
+
+--- .class #id
+
+### Analysis
+
+Analysis consisted of fitting a predictive model of iris species based on petal length/width and sepal length/width. The final model was then plotted as a decision tree.
+
+```{r analysis, message=FALSE}
+modFit <- train(Species ~., method = "rpart", data=iris) #Fit model
+print(modFit$finalModel)   #Summarize model
+```
+
+--- .class #id
+
+
+The final model was then plotted as a decision tree.
+
+```{r tree, fig.width = 12, fig.height=6}
+fancyRpartPlot(modFit$finalModel) #Plot decision tree
+```
+
+Full document link: http://rpubs.com/BlackWidoww/52864
+
+--- .class #id
+
+## More Cool Stuff With Markdown
+ 
+- Pandoc Markdown allows for tables, images, citations, etc.  See http://rmarkdown.rstudio.com/authoring_pandoc_markdown.html#math
+
+- Math:
+  - Contain mathematical notation between two `$` characters inline with text (i.e. - within a paragraph) or as its own paragraph between `$$`. 
+  - Uses LaTeX (pronounced Lay-teck) 
+  - http://www.artofproblemsolving.com/Wiki/index.php/LaTeX:Symbols
+  - `f(x) = $\frac{\lambda x}{1+(ax)^b}$` $\rightarrow$ $f(x)\:=\:\frac{\lambda x}{1\:+\:(ax)^b}$
+  
+- Links:
+  - Enclose a url between pointy brackets, `<url>`, for an automatic link.
+  - Inline links: `[my link](/url)` 
+  - Reference links: Here is `[my link][LINK]`    `[LINK]: /url/goes/here`
+    
+
+--- .class #id
+
+## Knitr
+
+Finish your document:
+1. Save your document by clicking the floppy disk icon or File $\rightarrow$  Save. Your document will have the file extension `.Rmd`. 
+
+2. Click `Knit HTML` to create two output documents:
+
+  - A `.html` document, which will open in your favorite web browser.
+  - A `.md` document, which contains all the document formatting. 
+  
+## RPubs  
+You can publish an RMarkdown piece to a publicly accessible website using RPubs by clicking `Publish` on your finished HTML.   
+
+
+
+Built in [Slidify](http://ramnathv.github.io/slidify/index.html). Hosted on [RPubs](http://rpubs.com/BlackWidoww). Created by [@_BlackWidoww](https://github.com/BlackWidoww)
+  
