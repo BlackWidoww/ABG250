@@ -1,1 +1,66 @@
-blank
+---
+title: "Classification With Iris Data Set"
+author: "Courtney D. Shelley"
+date: "February 7, 2015"
+output: html_document
+---
+
+
+We will use R.A. Fisher's classic iris data set to generate a classification tree.  This data set is freely available from the **UCI Machine Learing Repository**, https://archive.ics.uci.edu/ml/datasets/Iris.  
+
+The data set includes:
+
+1. Sepal length in cm
+2. Sepal width in cm
+3. Petal length in cm
+4. Petal width in cm
+5.  class:
+
+    -_Iris setosa_
+  
+    -_Iris versicolor_
+  
+    -_Iris virginica_
+  
+### Data Exploration
+
+```{r loadData}
+#Load data
+
+data(iris)
+nrow <- nrow(iris); ncol <- ncol(iris)  #inline code
+iris[1:4,]  # View first four rowss of data set
+```  
+
+
+### Analysis
+
+Analysis consisted of fitting a predictive model of iris species based on 
+petal length/width and sepal length/width using the `caret` package. 
+
+```{r modFit, message=FALSE}
+
+#Load required package:
+library(caret)
+modFit <- train(Species ~., method = "rpart", data=iris) #Fit model
+print(modFit$finalModel)   #Summarize model
+```
+
+
+
+The final analysis is presented as a decison tree, using the `rattle` package.
+
+```{r plotTree, fig.width=6, fig.height=4, message=FALSE}
+library(rattle)
+fancyRpartPlot(modFit$finalModel) # Plot decision tree
+```
+
+## Discussion
+
+_I. setosa_ can be successfully isolated from other species by petal length.  _I. versicolor_ and _I. virgicina_ are somewhat more difficult to separate based on petal width.  
+
+
+
+This document is hosted freely on RPubs:   http://rpubs.com/BlackWidoww/58755
+
+.Rmd file and .pdf versions can be found here:  https://github.com/BlackWidoww/ABG250
