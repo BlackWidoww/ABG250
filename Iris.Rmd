@@ -61,6 +61,6 @@ _I. setosa_ can be successfully isolated from other species by petal length.  _I
 
 
 
-This document is hosted freely on RPubs:   http://rpubs.com/BlackWidoww/58755
+This document is hosted freely on RPubs:   http://rpubs.com/BlackWidoww/58757
 
-.Rmd file and .pdf versions can be found here:  https://github.com/BlackWidoww/ABG250
+.Rmd source code can be found here: https://github.com/BlackWidoww/ABG250
